@@ -4,16 +4,109 @@ from .falta import Falta
 
 class Materia:
     def __init__(self, nome, codigo, carga_horaria, horario, professor, turma):
-        self.nome = nome
-        self.codigo = codigo
-        self.carga_horaria = carga_horaria
-        self.horario = horario
-        self.professor = professor
-        self.turma = turma
-        self.nota = 0
-        self.mencao = "XX"
+        self.__nome = nome
+        self.__codigo = codigo
+        self.__carga_horaria = carga_horaria
+        self.__horario = horario
+        self.__professor = professor
+        self.__turma = turma
+        self.__nota = 0
+        self.__mencao = "XX"
         self.faltas = []
         self.avaliacoes = []
+
+    #GETTERS E SETTERS
+    @property
+    def nome(self):
+        return self.__nome
+    
+    @nome.setter
+    def nome(self, value):
+        if not isinstance(value, str):
+            raise TypeError("O valor deve ser uma string.")
+        self.__nome = value
+
+    @property
+    def codigo(self):
+        return self.__codigo
+    
+    @codigo.setter
+    def codigo(self, value):
+        if not isinstance(value, str):
+            raise TypeError("O valor deve ser uma string.")
+        self.__codigo = value
+
+    @property
+    def carga_horaria(self):
+        return self.__carga_horaria
+    
+    @carga_horaria.setter
+    def carga_horaria(self, value):
+        if not isinstance(value, int):
+            raise TypeError("O valor deve ser um número inteiro.")
+        if value not in [15, 30, 45, 60, 75, 90, 105, 120]:
+            raise ValueError("O valor deve ser: 15, 30, 45, 60, 75, 90, 105 ou 120")
+        self.__carga_horaria = value
+
+    @property
+    def horario(self):
+        return self.__horario
+    
+    @horario.setter
+    def horario(self, value):
+        if not isinstance(value, str):
+            raise TypeError("O valor deve ser uma string.")
+        self.__horario = value
+
+    @property
+    def professor(self):
+        return self.__professor
+    
+    @professor.setter
+    def professor(self, value):
+        if not isinstance(value, Professor):
+            raise TypeError("O valor deve ser um Professor.")
+        self.__professor = value
+
+    @property
+    def turma(self):
+        return self.__turma
+    
+    @turma.setter
+    def turma(self, value):
+        if not isinstance(value, int):
+            raise TypeError("O valor deve ser um número inteiro.")
+        if value < 0:
+            raise ValueError("O número não pode ser negativo.")
+        self.__turma = value
+
+    @property
+    def nota(self):
+        return self.__nota
+    
+    @nota.setter
+    def nota(self, value):
+        if not isinstance(value, float):
+            raise TypeError("O valor deve ser um número flutuante.")
+        if value <= 0:
+            raise ValueError("O número não pode ser negativo.")
+        if value > 10.0:
+            raise ValueError("O número não pode ser maior que 10.0.")
+        self.__nota = value
+
+    @property
+    def mencao(self):
+        return self.__mencao
+    
+    @mencao.setter
+    def mencao(self, value):
+        if not isinstance(value, str):
+            raise TypeError("O valor deve ser uma string.")
+        if value not in ["SR", "II", "MI", "MM", "MS", "SS", "XX"]:
+            raise ValueError("O valor deve ser: SR, II, MI, MM, MS, SS ou XX")
+        self.__mencao = value
+
+    #MÉTODOS
 
     def menu_materia(self):
         while True:
@@ -54,19 +147,19 @@ class Materia:
                     print("Funcao Invalida")
 
     def apresentar_materia(self):
-        print(f"{self.nome}\nCodigo: {self.codigo}")
+        print(f"{self.__nome}\nCodigo: {self.__codigo}")
 
     def relatorio_materia(self):
-        print(f"=== {self.nome} ===")
-        print(f"Codigo: {self.codigo}")
-        print(f"Carga Horaria: {self.carga_horaria}")
-        print(f"Horario: {self.horario}")
-        print(f"Professor: {self.professor.nome}")
-        print(f"Email do professor: {self.professor.email}")
-        print(f"Turma: {self.turma}")
+        print(f"=== {self.__nome} ===")
+        print(f"Codigo: {self.__codigo}")
+        print(f"Carga Horaria: {self.__carga_horaria}")
+        print(f"Horario: {self.__horario}")
+        print(f"Professor: {self.__professor.nome}")
+        print(f"Email do professor: {self.__professor.email}")
+        print(f"Turma: {self.__turma}")
         self.relatorio_avaliacoes()
         self.relatorio_frequencia()
-        print(f"=== {self.nome} ===")
+        print(f"=== {self.__nome} ===")
         print()
 
     def relatorio_avaliacoes(self):
@@ -79,7 +172,7 @@ class Materia:
             print("======== = ========")
 
     def calcular_max_faltas(self):
-        return int(self.carga_horaria * 0.25) #Levando em conta que o maximo de faltas é 25%
+        return int(self.__carga_horaria * 0.25) #Levando em conta que o maximo de faltas é 25%
 
     def criar_falta(self, qtd, data):
         falta = Falta(qtd, data)
@@ -105,21 +198,21 @@ class Materia:
             nota += avaliacao.nota * avaliacao.peso
             peso_total += avaliacao.peso
 
-        self.nota = nota / peso_total
+        self.__nota = nota / peso_total
 
     def calcular_mencao(self):
         if(self.calcular_faltas() > self.calcular_max_faltas()):
             self.mencao = "SR"
         else:
-            if(self.nota < 3.0):
+            if(self.__nota < 3.0):
                 self.mencao = "II"
-            elif(self.nota >= 3.0 and self.nota < 5.0):
+            elif(self.__nota >= 3.0 and self.__nota < 5.0):
                 self.mencao = "MI"
-            elif(self.nota >= 5.0 and self.nota < 7.0):
+            elif(self.__nota >= 5.0 and self.__nota < 7.0):
                 self.mencao = "MM"
-            elif(self.nota >= 7.0 and self.nota < 9.0):
+            elif(self.__nota >= 7.0 and self.__nota < 9.0):
                 self.mencao = "MS"
-            elif(self.nota >= 9.0):
+            elif(self.__nota >= 9.0):
                 self.mencao = "SS"
 
     def criar_avaliacao(self, nome, nota, peso, data):
@@ -132,15 +225,5 @@ class Materia:
         #Implementar
         pass
 
-    """
-    Implementar GETTERS E SETTERS de:
-        nome
-        codigo 
-        CH
-        horario
-        turma
-        nota
-        mencao
-        professor
-    """
+    
 
