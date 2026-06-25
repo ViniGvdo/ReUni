@@ -2,11 +2,60 @@ from .pessoa import Pessoa
 from .semestre import Semestre
 
 class Aluno(Pessoa):
-    def __init__(self, nome, matricula):
-        super().__init__(nome)
-        self.matricula = matricula
-        self.IRA = 0.0
+    def __init__(self, nome:str, matricula:str, email:str):
+        self.__nome = nome
+        self.__matricula = matricula
+        self.__email = email
+        self.__IRA = 0.0
         self.semestres = []
+
+    #GETTERS E SETTERS
+
+    @property
+    def nome(self):
+        return self.__nome
+    
+    @nome.setter
+    def nome(self, value):
+        if not isinstance(value, str):
+            raise ValueError("O valor deve ser uma string")
+        self.__nome = value
+
+    @property
+    def matricula(self):
+        return self.__matricula
+    
+    @matricula.setter
+    def matricula(self, value):
+        if not isinstance(value, str):
+            raise TypeError("O valor deve ser uma string.")
+        self.__matricula = value
+
+    @property
+    def email(self):
+        return self.__email
+    
+    @email.setter
+    def email(self, value):
+        if not isinstance(value, str):
+            raise ValueError("O valor deve ser uma string")
+        self.__email = value
+
+    @property
+    def IRA(self):
+        return self.__IRA
+    
+    @IRA.setter
+    def IRA(self, value):
+        if not isinstance(value, float):
+            raise TypeError("O valor deve ser um numero flutuante")
+        if value < 0:
+            raise ValueError("O valor nao pode ser negativo")
+        if value > 5.0:
+            raise ValueError("O valor nao pode ser maior que 5.0")
+        self.__IRA = value
+
+    #MÉTODOS
 
     def menu_aluno(self):
         while True:
@@ -44,16 +93,8 @@ class Aluno(Pessoa):
                 case _:
                     print("Funcao invalida")
 
-    """
-    Implementar GETTERS E SETTERS de:
-        nome
-        matricula
-        IRA
-        semestres(lista)
-    """
-
-    def apresentar_aluno(self):
-        print(f"Aluno: {self.nome}\nMatricula: {self.matricula}")
+    def apresentar(self):
+        print(f"Aluno: {self.nome}\nMatricula: {self.matricula}\nEmail: {self.email}")
 
     def calcular_IRA(self):
         #Implementar
