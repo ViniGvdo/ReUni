@@ -3,8 +3,22 @@ from .professor import Professor
 
 class Semestre:
     def __init__(self, semestre):
-        self.semestre = semestre
+        self.__semestre = semestre
         self.materias = []
+
+    #GETTERS E SETTERS
+
+    @property
+    def semestre(self):
+        return self.__semestre
+    
+    @semestre.setter
+    def semestre(self, value):
+        if not isinstance(value, str):
+            raise ValueError("O valor deve ser uma string")
+        self.__semestre = value
+
+    #MÉTODOS
 
     def menu_semestre(self):
         while True:
@@ -23,9 +37,8 @@ class Semestre:
                     horario = input("Horario: ")
                     nome_professor = input("Nome do Professor: ")
                     email_professor = input("Email do professor: ")
-                    siape_professor = input("Siape do professor: ")
                     departamento_professor = input("Departamento do professor: ")
-                    professor = Professor(nome_professor, email_professor, siape_professor, departamento_professor)
+                    professor = Professor(nome_professor, email_professor, departamento_professor)
                     turma = input("Turma: ")
                     self.criar_materia(nome, codigo, carga_horaria, horario, professor, turma)
 
@@ -79,8 +92,3 @@ class Semestre:
     def deletar_materia(self, codigo):
         #Implementar 
         pass
-
-    """
-    Implementar GETTERS E SETTERS de:
-        semestre
-    """
