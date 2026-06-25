@@ -3,7 +3,7 @@ from .avaliacao import Avaliacao
 from .falta import Falta
 
 class Materia:
-    def __init__(self, nome, codigo, carga_horaria, horario, professor, turma):
+    def __init__(self, nome:str, codigo:str, carga_horaria:int, horario:str, professor:Professor, turma:int):
         self.__nome = nome
         self.__codigo = codigo
         self.__carga_horaria = carga_horaria
@@ -154,8 +154,7 @@ class Materia:
         print(f"Codigo: {self.__codigo}")
         print(f"Carga Horaria: {self.__carga_horaria}")
         print(f"Horario: {self.__horario}")
-        print(f"Professor: {self.__professor.nome}")
-        print(f"Email do professor: {self.__professor.email}")
+        self.__professor.apresentar()
         print(f"Turma: {self.__turma}")
         self.relatorio_avaliacoes()
         self.relatorio_frequencia()
