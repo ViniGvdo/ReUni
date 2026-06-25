@@ -9,7 +9,7 @@ class System:
             print("=== LISTA DOS ALUNOS ===")
             print()
             for aluno in self.alunos:
-                aluno.apresentar_aluno()
+                aluno.apresentar()
                 print()
             return True
         else:
@@ -38,10 +38,11 @@ class System:
     def novo_aluno(self):
         nome = input("Insira o nome do aluno: ")
         matricula = input("Insira a matricula do aluno: ")
-        self.criar_aluno(nome, matricula)
+        email = input("Insira o email do aluno: ")
+        self.criar_aluno(nome, matricula, email)
 
-    def criar_aluno(self, nome, matricula):
-        aluno = Aluno(nome, matricula)
+    def criar_aluno(self, nome, matricula, email):
+        aluno = Aluno(nome, matricula, email)
         self.alunos.append(aluno)
 
     def buscar_aluno(self, matricula):
