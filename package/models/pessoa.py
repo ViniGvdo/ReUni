@@ -1,10 +1,31 @@
-class Pessoa:
-    def __init__(self, nome , email = None):
-        self.nome = nome
-        self.email = email
+from abc import ABC, abstractmethod
 
-    """
-    Implementar !CONTRATOS! de GETTERS E SETTERS de:
-        nome
-        email
-    """
+class Pessoa(ABC):
+
+    #GETTERS E SETTERS
+
+    @property
+    @abstractmethod
+    def nome(self):
+        pass
+
+    @nome.setter
+    @abstractmethod
+    def nome(self, value):
+        pass
+
+    @property
+    @abstractmethod
+    def email(self):
+        pass
+
+    @email.setter
+    @abstractmethod
+    def email(self, value):
+        pass
+
+    #MÉTODOS
+
+    @abstractmethod
+    def apresentar(self):
+        pass
