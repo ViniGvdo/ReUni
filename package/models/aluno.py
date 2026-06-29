@@ -60,10 +60,12 @@ class Aluno(Pessoa):
     def menu_aluno(self):
         while True:
             print("Voce esta no menu do aluno, digite '0' para sair")
-            print("1 - Criar novo semestre")
+            print("1 - Criar novo Semestre")
             print("2 - Selecionar Semestre existente")
-            print("3 - Relatorio do Aluno")
+            print("3 - Criar e Selecionar Semestre")
             print("4 - Deletar semestre")
+            print("5 - Listar Semestres")
+            print("6 - Relatorio do Aluno")
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
                 case 0:
@@ -89,7 +91,10 @@ class Aluno(Pessoa):
                         print("Nao ha semestres criados")
 
                 case 3:
-                    self.relatorio_aluno()
+                    sem = input("Insira o semestre (ano.digito): ")
+                    self.criar_semestre(sem)
+                    semestre = self.buscar_semestre(sem)
+                    semestre.menu_semestre()
 
                 case 4:
                     if self.semestres:
@@ -104,6 +109,18 @@ class Aluno(Pessoa):
                             print("Semestre nao cadastrado") 
                     else:
                         print("Nao ha semestres criados")
+
+                case 5:
+                    if self.semestres:
+                        print("=== Semestres ===")
+                        for semestre in self.semestres:
+                            semestre.apresentar_semestre()
+                            print() 
+                    else:
+                        print("Nao ha semestres criados")
+
+                case 6:
+                    self.relatorio_aluno()
 
                 case _:
                     print("Funcao invalida")
