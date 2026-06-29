@@ -19,17 +19,30 @@ class System:
     def menu_geral(self):
         while True:
             print("Voce esta no menu geral, digite '0' para sair")
-            status = input("Digite 's' para selecionar um aluno existente, 'c' para criar um novo aluno: ")
-            if(status == 's'):
+            print("1 - Selecionar Aluno")
+            print("2 - Criar Aluno")
+            print("3 - Deletar Aluno")
+            status = int(input("Escolha a funcao que deseja executar: "))
+            if(status == 1):
                 if self.exibir_alunos():
                     matricula = input("Insira a matricula do aluno que voce deseja selecionar\n")
-                    aluno = self.buscar_aluno(matricula)
-                    aluno.menu_aluno()
-            elif(status == 'c'):
+                    if self.verificar_aluno(matricula):
+                        aluno = self.buscar_aluno(matricula)
+                        aluno.menu_aluno()
+                    else:
+                        print("Aluno nao cadastrado")
+            elif(status == 2):
                 self.novo_aluno()
                 print("Aluno criado com sucesso!")
                 #Implementar uma funcao se o usuario quiser criar e selecionar logo em seguida
-            elif(status == '0'):
+            elif(status == 3):
+                if self.exibir_alunos():
+                    matricula = input("Insira a matricula do aluno que voce deseja selecionar\n")
+                    if self.verificar_aluno(matricula):
+                        self.deletar_aluno(matricula)
+                    else:
+                        print("Aluno nao cadastrado")
+            elif(status == 0):
                 return
             else:
                 print("Resposta invalida, tente novamente")
@@ -45,6 +58,12 @@ class System:
         aluno = Aluno(nome, matricula, email)
         self.alunos.append(aluno)
 
+    def verificar_aluno(self, matricula):
+        for aluno in self.alunos:
+            if(aluno.matricula == matricula):
+                return True
+        return False
+
     def buscar_aluno(self, matricula):
         for aluno in self.alunos:
             if(aluno.matricula == matricula):
@@ -52,8 +71,7 @@ class System:
 
 
     def deletar_aluno(self, matricula):
-        #Implementar
-        pass
+        self.alunos.remove(self.buscar_aluno(matricula))
 
 
 
