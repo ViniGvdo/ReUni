@@ -19,11 +19,16 @@ class System:
     def menu_geral(self):
         while True:
             print("Voce esta no menu geral, digite '0' para sair")
-            print("1 - Selecionar Aluno")
-            print("2 - Criar Aluno")
-            print("3 - Deletar Aluno")
+            print("1 - Criar Aluno")
+            print("2 - Selecionar Aluno")
+            print("3 - Criar e Selecionar Aluno")
+            print("4 - Deletar Aluno")
+            print("5 - Listar Alunos")
             status = int(input("Escolha a funcao que deseja executar: "))
             if(status == 1):
+                self.novo_aluno()
+                print("Aluno criado com sucesso!")
+            elif(status == 2):
                 if self.exibir_alunos():
                     matricula = input("Insira a matricula do aluno que voce deseja selecionar\n")
                     if self.verificar_aluno(matricula):
@@ -31,17 +36,24 @@ class System:
                         aluno.menu_aluno()
                     else:
                         print("Aluno nao cadastrado")
-            elif(status == 2):
-                self.novo_aluno()
-                print("Aluno criado com sucesso!")
-                #Implementar uma funcao se o usuario quiser criar e selecionar logo em seguida
             elif(status == 3):
+                nome = input("Insira o nome do aluno: ")
+                matricula = input("Insira a matricula do aluno: ")
+                email = input("Insira o email do aluno: ")
+                self.criar_aluno(nome, matricula, email)
+                print("Aluno criado com sucesso!")
+                aluno = self.buscar_aluno(matricula)
+                aluno.menu_aluno()
+
+            elif(status == 4):
                 if self.exibir_alunos():
                     matricula = input("Insira a matricula do aluno que voce deseja selecionar\n")
                     if self.verificar_aluno(matricula):
                         self.deletar_aluno(matricula)
                     else:
                         print("Aluno nao cadastrado")
+            elif(status == 5):
+                self.exibir_alunos()
             elif(status == 0):
                 return
             else:

@@ -2,6 +2,7 @@ class Falta:
     def __init__(self, qtd:int, data:str):
         self.qtd = qtd
         self.data = data
+        #Fazer um atributo de classe para criar um id depois
 
     #GETTERS E SETTERS
 

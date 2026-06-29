@@ -5,6 +5,7 @@ class Avaliacao:
         self.__peso = peso
         self.__data = data
         self.__id = nome + data
+        #Fazer um atributo de classe para gerar ids
 
     #GETTERS E SETTERS
 
