@@ -23,9 +23,11 @@ class Semestre:
     def menu_semestre(self):
         while True:
             print("Voce esta no menu do semestre, digite '0' para sair")
-            print("1 - Criar nova materia")
-            print("2 - Selecionar materia")
-            print("3 - Deletar Matéria")
+            print("1 - Criar nova Materia")
+            print("2 - Selecionar Materia")
+            print("3 - Criar e Selecionar Materia")
+            print("4 - Deletar Materia")
+            print("5 - Listar Materias")
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
                 case 0:
@@ -61,6 +63,20 @@ class Semestre:
                         print("Nao ha semestres criados")
 
                 case 3:
+                    nome = input("Nome da materia: ")
+                    codigo = input("Codigo: ")
+                    carga_horaria = int(input("Carga Horaria em horas: "))
+                    horario = input("Horario: ")
+                    nome_professor = input("Nome do Professor: ")
+                    email_professor = input("Email do professor: ")
+                    departamento_professor = input("Departamento do professor: ")
+                    professor = Professor(nome_professor, email_professor, departamento_professor)
+                    turma = input("Turma: ")
+                    self.criar_materia(nome, codigo, carga_horaria, horario, professor, turma)
+                    materia = self.buscar_materia(codigo)
+                    materia.menu_materia()
+
+                case 4:
                     if self.materias:
                         print("=== Lista de Materias ===")
                         for materia in self.materias:
@@ -73,6 +89,15 @@ class Semestre:
                         else: 
                             print("Codigo de Materia invalido")
 
+                    else:
+                        print("Nao ha semestres criados")
+
+                case 5:
+                    if self.materias:
+                        print("=== Lista de Materias ===")
+                        for materia in self.materias:
+                            materia.apresentar_materia()
+                            print()
                     else:
                         print("Nao ha semestres criados")
 
