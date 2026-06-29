@@ -25,6 +25,7 @@ class Semestre:
             print("Voce esta no menu do semestre, digite '0' para sair")
             print("1 - Criar nova materia")
             print("2 - Selecionar materia")
+            print("3 - Deletar Matéria")
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
                 case 0:
@@ -53,6 +54,22 @@ class Semestre:
                         if self.verificar_materia(codigo_materia):
                             materia = self.buscar_materia(codigo_materia)
                             materia.menu_materia()  
+                        else: 
+                            print("Codigo de Materia invalido")
+
+                    else:
+                        print("Nao ha semestres criados")
+
+                case 3:
+                    if self.materias:
+                        print("=== Lista de Materias ===")
+                        for materia in self.materias:
+                            materia.apresentar_materia()
+                            print()
+
+                        codigo_materia = input("Digite o codigo da materia que deseja deletar: ")
+                        if self.verificar_materia(codigo_materia):
+                            self.deletar_materia(codigo_materia)
                         else: 
                             print("Codigo de Materia invalido")
 
@@ -90,5 +107,4 @@ class Semestre:
 
 
     def deletar_materia(self, codigo):
-        #Implementar 
-        pass
+        self.materias.remove(self.buscar_materia(codigo))
