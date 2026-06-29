@@ -2,7 +2,7 @@ from .materia import Materia
 from .professor import Professor
 
 class Semestre:
-    def __init__(self, semestre):
+    def __init__(self, semestre:str):
         self.__semestre = semestre
         self.materias = []
 

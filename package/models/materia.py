@@ -113,9 +113,14 @@ class Materia:
             print("Voce esta no menu da materia, digite '0' para sair")
             print("1 - Relatorio da Materia")
             print("2 - Registrar Falta")
-            print("3 - Relatorio de Frequencia")
-            print("4 - Criar avaliacao")
-            print("5 - Relatorio avaliacoes")
+            print("3 - Listar Faltas")
+            print("4 - Apagar Falta")
+            print("5 - Relatorio de Frequencia")
+            print("6 - Criar avaliacao")
+            print("7 - Listar Avaliacoes")
+            print("8 - Apagar Avaliacao")
+            print("9 - Relatorio avaliacoes")
+            print("10 - Informacoes do Professor")
 
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
@@ -131,17 +136,48 @@ class Materia:
                     self.criar_falta(qtd, data)
 
                 case 3:
-                    self.relatorio_frequencia()
+                    self.listar_faltas()
 
                 case 4:
+                    self.listar_faltas()
+                    if self.faltas:
+                        id = int(input("Escolha o id da falta que deseja excluir: "))
+                        if self.verificar_falta(id):
+                            self.deletar_falta(id)
+                        else:
+                            print("id de Falta invalido")
+                    
+
+                case 5:
+                    self.relatorio_frequencia()
+
+                case 6:
                     nome = input("Nome: ")
                     nota = float(input("Nota: "))
                     peso = float(input("Peso: "))
                     data = input("Data 'dia/mes/ano': ")
                     self.criar_avaliacao(nome, nota, peso, data)
 
-                case 5:
+                case 7:
+                    self.listar_avaliacoes()
+
+                case 8:
+                    self.listar_avaliacoes()
+                    if self.avaliacoes:
+                        id = int(input("Escolha o id da avaliacao que deseja excluir: "))
+                        if self.verificar_avaliacao(id):
+                            self.deletar_avaliacao(id)
+                        else:
+                            print("id de Avaliacao invalido")
+
+                case 9:
                     self.relatorio_avaliacoes()
+
+                case 10:
+                    print("====================="
+                    "=======")
+                    self.professor.apresentar()
+                    print("============================")
 
                 case _:
                     print("Funcao Invalida")
@@ -161,6 +197,15 @@ class Materia:
         print(f"=== {self.__nome} ===")
         print()
 
+    def listar_avaliacoes(self):
+        if self.avaliacoes:
+            print("=== Avaliacoes ===")
+            for avaliacao in self.avaliacoes:
+                avaliacao.apresentar_avaliacao()
+            print("======== = ========") 
+        else:
+            print("Nao ha avaliacoes registradas")
+
     def relatorio_avaliacoes(self):
         if self.avaliacoes:
             print(f"Nota: {self.nota}")
@@ -177,11 +222,34 @@ class Materia:
         falta = Falta(qtd, data)
         self.faltas.append(falta)
 
+    def verificar_falta(self, id):
+        for falta in self.faltas:
+            if id == falta.id:
+                return True
+        return False
+    
+    def buscar_falta(self, id):
+        for falta in self.faltas:
+            if id == falta.id:
+                return falta
+
+    def deletar_falta(self, id):
+        self.faltas.remove(self.buscar_falta(id))
+
     def calcular_faltas(self):
         num_faltas = 0
         for falta in self.faltas:
             num_faltas += falta.qtd
         return num_faltas
+    
+    def listar_faltas(self):
+        if self.faltas:
+            print(f"=========== Faltas =============")
+            for falta in self.faltas:
+                falta.exibir_falta()
+            print("=== ========================= ===")
+        else:
+            print("Nao ha faltas cadastradas")
 
     def relatorio_frequencia(self):
         print("\n=== RELATORIO DE FREQUENCIA ===")
@@ -220,9 +288,19 @@ class Materia:
         self.calcular_nota()
         self.calcular_mencao()
 
+    def verificar_avaliacao(self, id):
+        for avaliacao in self.avaliacoes:
+            if id == avaliacao.id:
+                return True
+        return False
+    
+    def buscar_avaliacao(self, id):
+        for avaliacao in self.avaliacoes:
+            if id == avaliacao.id:
+                return avaliacao
+
     def deletar_avaliacao(self, id):
-        #Implementar
-        pass
+        self.avaliacoes.remove(self.buscar_avaliacao(id))
 
     
 

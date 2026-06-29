@@ -1,8 +1,13 @@
 class Falta:
+    #Atributo estático p/ id
+    instancias = 0
+
     def __init__(self, qtd:int, data:str):
-        self.qtd = qtd
-        self.data = data
-        #Fazer um atributo de classe para criar um id depois
+        self.__qtd = qtd
+        self.__data = data
+        Falta.instancias += 1
+        self.__id = Falta.instancias
+        
 
     #GETTERS E SETTERS
 
@@ -28,9 +33,19 @@ class Falta:
             raise ValueError("O valor deve ser uma string")
         self.__data = value
 
+    @property
+    def id(self):
+        return self.__id
+    
+    @id.setter
+    def id(self, value):
+        if not isinstance(value, str):
+            raise ValueError("O valor deve ser uma string")
+        self.__id = value
+
     #MÉTODOS
 
     def exibir_falta(self):
-        print(f"{self.data}: {self.qtd} faltas")
+        print(f"[{self.id}] {self.data}: {self.qtd} faltas")
 
     

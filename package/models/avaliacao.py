@@ -1,11 +1,15 @@
 class Avaliacao:
+    #Atributo estatico p/ id
+    instancias = 0
+
     def __init__(self, nome:str, nota:float, peso:float, data:str):
         self.__nome = nome
         self.__nota = nota
         self.__peso = peso
         self.__data = data
-        self.__id = nome + data
-        #Fazer um atributo de classe para gerar ids
+        Avaliacao.instancias += 1
+        self.__id = Avaliacao.instancias
+        
 
     #GETTERS E SETTERS
 
@@ -68,6 +72,6 @@ class Avaliacao:
     #MÉTODOS
 
     def apresentar_avaliacao(self):
-        print(f"{self.data} - {self.nome} (peso {self.peso}): {self.nota}")
+        print(f"[{self.id}] {self.data} - {self.nome} (peso {self.peso}): {self.nota}")
 
 
