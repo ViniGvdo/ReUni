@@ -72,7 +72,8 @@ class Aluno(Pessoa):
                     return
                 case 1:
                     sem = input("Insira o semestre (ano.digito): ")
-                    self.criar_semestre(sem)
+                    periodo = int(input("Qual o numero do periodo? "))
+                    self.criar_semestre(sem, periodo)
 
                 case 2:
                     if self.semestres:
@@ -92,7 +93,8 @@ class Aluno(Pessoa):
 
                 case 3:
                     sem = input("Insira o semestre (ano.digito): ")
-                    self.criar_semestre(sem)
+                    periodo = int(input("Qual o numero do periodo? "))
+                    self.criar_semestre(sem, periodo)
                     semestre = self.buscar_semestre(sem)
                     semestre.menu_semestre()
 
@@ -126,22 +128,48 @@ class Aluno(Pessoa):
                     print("Funcao invalida")
 
     def apresentar(self):
-        print(f"Aluno: {self.nome}\nMatricula: {self.matricula}\nEmail: {self.email}")
+        self.calcular_IRA()
+        print(f"Aluno: {self.nome}\nMatricula: {self.matricula}\nEmail: {self.email}\nIRA: {self.IRA}")
 
     def calcular_IRA(self):
-        #Implementar
-        pass
+        soma = 0.0
+        dividir = 0.0
+
+        equivalencia = 0.0
+        credito = 0.0
+        nsem = 0.0
+
+        converter = {"SS": 5, "MS": 4, "MM": 3, "MI": 2, "II": 1, "SR": 0, "XX": 0}
+
+        for semestre in self.semestres:
+            if semestre.periodo <= 6:
+                nsem = semestre.periodo
+            else:
+                nsem = 6
+            if semestre.materias:
+                for materia in semestre.materias:
+                    credito = materia.carga_horaria / 15
+                    equivalencia = converter[materia.mencao]
+                    soma += equivalencia * credito * nsem
+                    dividir += credito * nsem
+        if dividir == 0.0:
+            self.IRA = 0.0
+        else:
+            self.IRA = soma / dividir
+
 
     def relatorio_aluno(self):
         print(f"=== Relatorio de {self.nome} ===")
         print(f"Matricula: {self.matricula}")
+        self.calcular_IRA()
+        print(f"IRA: {self.IRA}")
         print()
         for semestre in self.semestres:
             semestre.relatorio_semestre()
         print(f"=== Relatorio de {self.nome} ===")
 
-    def criar_semestre(self, semestre):
-        sem = Semestre(semestre)
+    def criar_semestre(self, semestre, periodo):
+        sem = Semestre(semestre, periodo)
         self.semestres.append(sem)
 
     def verificar_semestre(self, sem):

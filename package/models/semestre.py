@@ -2,8 +2,9 @@ from .materia import Materia
 from .professor import Professor
 
 class Semestre:
-    def __init__(self, semestre:str):
+    def __init__(self, semestre:str, periodo:int):
         self.__semestre = semestre
+        self.__periodo = periodo
         self.materias = []
 
     #GETTERS E SETTERS
@@ -17,6 +18,20 @@ class Semestre:
         if not isinstance(value, str):
             raise ValueError("O valor deve ser uma string")
         self.__semestre = value
+
+    @property
+    def periodo(self):
+        return self.__periodo
+    
+    @periodo.setter
+    def periodo(self, value):
+        if not isinstance(value, int):
+            raise ValueError("O valor deve ser um inteiro")
+        if value < 0:
+            raise ValueError("O valor nao pode ser negativo")
+        if value > 21:
+            raise ValueError("O valor nao pode ser maior que 21")
+        self.__periodo = value
 
     #MÉTODOS
 
@@ -106,7 +121,7 @@ class Semestre:
 
 
     def apresentar_semestre(self):
-        print(f"{self.semestre}")
+        print(f"{self.semestre} ({self.periodo})")
 
     def relatorio_semestre(self):
         print(f"=== {self.semestre} ===")
