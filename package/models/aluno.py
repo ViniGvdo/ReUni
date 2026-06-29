@@ -63,6 +63,7 @@ class Aluno(Pessoa):
             print("1 - Criar novo semestre")
             print("2 - Selecionar Semestre existente")
             print("3 - Relatorio do Aluno")
+            print("4 - Deletar semestre")
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
                 case 0:
@@ -78,7 +79,7 @@ class Aluno(Pessoa):
                             semestre.apresentar_semestre()
                             print()
                 
-                        sem = input("Qual semestre deseja selecionar?")
+                        sem = input("Qual semestre deseja selecionar? ")
                         if self.verificar_semestre(sem):
                             semestre = self.buscar_semestre(sem)
                             semestre.menu_semestre()
@@ -89,6 +90,20 @@ class Aluno(Pessoa):
 
                 case 3:
                     self.relatorio_aluno()
+
+                case 4:
+                    if self.semestres:
+                        print("=== Semestres ===")
+                        for semestre in self.semestres:
+                            semestre.apresentar_semestre()
+                            print()
+                        sem = input("Qual semestre deseja deletar? ")
+                        if self.verificar_semestre(sem):
+                            self.deletar_semestre(sem)
+                        else: 
+                            print("Semestre nao cadastrado") 
+                    else:
+                        print("Nao ha semestres criados")
 
                 case _:
                     print("Funcao invalida")
@@ -124,5 +139,4 @@ class Aluno(Pessoa):
                 return semestre
 
     def deletar_semestre(self, semestre):
-        #Implementar 
-        pass
+        self.semestres.remove(self.buscar_semestre(semestre))
