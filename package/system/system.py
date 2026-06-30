@@ -6,11 +6,13 @@ class System:
 
     def exibir_alunos(self):
         if(self.alunos):
-            print("=== LISTA DOS ALUNOS ===")
-            print()
+            print("=========================================")
+            print("             LISTA DE ALUNOS             ")
+            print("=========================================")
             for aluno in self.alunos:
                 aluno.apresentar()
                 print()
+            print("=========================================")
             return True
         else:
             print("Nenhum aluno cadastrado")
@@ -18,12 +20,17 @@ class System:
                 
     def menu_geral(self):
         while True:
-            print("Voce esta no menu geral, digite '0' para sair")
+            print()
+            print("=========================================")
+            print("                MENU GERAL              ")
+            print("=========================================")
+            print("0 - SAIR")
             print("1 - Criar Aluno")
             print("2 - Selecionar Aluno")
             print("3 - Criar e Selecionar Aluno")
             print("4 - Deletar Aluno")
             print("5 - Listar Alunos")
+            print("=========================================")
             status = int(input("Escolha a funcao que deseja executar: "))
             if(status == 1):
                 self.novo_aluno()

@@ -110,7 +110,12 @@ class Materia:
 
     def menu_materia(self):
         while True:
-            print("Voce esta no menu da materia, digite '0' para sair")
+            print()
+            print("=========================================")
+            print("               MENU MATERIA              ")
+            print("=========================================")
+            print(f"[{self.nome}]")
+            print("0 - VOLTAR")
             print("1 - Relatorio da Materia")
             print("2 - Registrar Falta")
             print("3 - Listar Faltas")
@@ -121,6 +126,7 @@ class Materia:
             print("8 - Apagar Avaliacao")
             print("9 - Relatorio avaliacoes")
             print("10 - Informacoes do Professor")
+            print("=========================================")
 
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
@@ -159,25 +165,39 @@ class Materia:
                     self.criar_avaliacao(nome, nota, peso, data)
 
                 case 7:
-                    self.listar_avaliacoes()
+                    if self.avaliacoes:
+                        print("=========================================")
+                        print("            LISTA DE AVALIACOES          ")
+                        print("=========================================")
+                        self.listar_avaliacoes()
+                        print("=========================================")
+                    else:
+                        print("Nao ha avaliacoes registradas")
 
                 case 8:
-                    self.listar_avaliacoes()
                     if self.avaliacoes:
+                        print("=========================================")
+                        print("            LISTA DE AVALIACOES          ")
+                        print("=========================================")
+                        self.listar_avaliacoes()
+                        print("=========================================")
                         id = int(input("Escolha o id da avaliacao que deseja excluir: "))
                         if self.verificar_avaliacao(id):
                             self.deletar_avaliacao(id)
                         else:
                             print("id de Avaliacao invalido")
+                    else: 
+                        print("Nao ha avaliacoes registradas")
 
                 case 9:
                     self.relatorio_avaliacoes()
 
                 case 10:
-                    print("====================="
-                    "=======")
+                    print("=========================================")
+                    print("             SOBRE O PROFESSOR           ")
+                    print("=========================================")
                     self.professor.apresentar()
-                    print("============================")
+                    print("=========================================")
 
                 case _:
                     print("Funcao Invalida")
@@ -186,34 +206,43 @@ class Materia:
         print(f"{self.__nome}\nCodigo: {self.__codigo}")
 
     def relatorio_materia(self):
-        print(f"=== {self.__nome} ===")
+        print("=========================================")
+        print("           RELATORIO DA MATERIA          ")
+        print("=========================================")
+        print(f"[{self.nome}]")
         print(f"Codigo: {self.__codigo}")
         print(f"Carga Horaria: {self.__carga_horaria}")
         print(f"Horario: {self.__horario}")
         self.__professor.apresentar()
         print(f"Turma: {self.__turma}")
-        self.relatorio_avaliacoes()
-        self.relatorio_frequencia()
-        print(f"=== {self.__nome} ===")
         print()
+        print("[NOTAS]")
+        print(f"Mencao: {self.mencao}")
+        print(f"Nota final: {self.nota}")
+        print()
+        print("AVALIACOES")
+        self.listar_avaliacoes()
+        print("=========================================")
 
     def listar_avaliacoes(self):
         if self.avaliacoes:
-            print("=== Avaliacoes ===")
             for avaliacao in self.avaliacoes:
                 avaliacao.apresentar_avaliacao()
-            print("======== = ========") 
-        else:
-            print("Nao ha avaliacoes registradas")
 
     def relatorio_avaliacoes(self):
         if self.avaliacoes:
+            print("=========================================")
+            print("         RELATORIO DE RENDIMENTO         ")
+            print("=========================================")
             print(f"Nota: {self.nota}")
             print(f"Mencao: {self.mencao}")
-            print("=== Avaliacoes ===")
+            print()
+            print("[Avaliacoes]")
             for avaliacao in self.avaliacoes:
                 avaliacao.apresentar_avaliacao()
-            print("======== = ========")
+            print("=========================================")
+        else:
+            print("Nao ha avaliacoes registradas")
 
     def calcular_max_faltas(self):
         return int(self.__carga_horaria * 0.25) #Levando em conta que o maximo de faltas é 25%
@@ -244,19 +273,25 @@ class Materia:
     
     def listar_faltas(self):
         if self.faltas:
-            print(f"=========== Faltas =============")
+            print("=========================================")
+            print("             LISTA DE FALTAS             ")
+            print("=========================================")
             for falta in self.faltas:
                 falta.exibir_falta()
-            print("=== ========================= ===")
+            print("=========================================")
         else:
             print("Nao ha faltas cadastradas")
 
     def relatorio_frequencia(self):
-        print("\n=== RELATORIO DE FREQUENCIA ===")
+        print("=========================================")
+        print("          RELATORIO DE FREQUENCIA        ")
+        print("=========================================")
+        print()
         print(f"Faltas: {self.calcular_faltas()}/{self.calcular_max_faltas()}\n")
         for falta in self.faltas:
             falta.exibir_falta()
-        print("=== ========================= ===")
+        print()
+        print("=========================================")
 
     def calcular_nota(self):
         nota = 0.0

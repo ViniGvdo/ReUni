@@ -43,3 +43,4 @@ class Professor(Pessoa):
     def apresentar(self):
         print(f"Professor: {self.nome}")
         print(f"Email do professor: {self.email}")
+        print(f"Departamento: {self.departamento}")

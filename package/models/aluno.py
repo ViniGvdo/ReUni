@@ -59,13 +59,19 @@ class Aluno(Pessoa):
 
     def menu_aluno(self):
         while True:
-            print("Voce esta no menu do aluno, digite '0' para sair")
+            print()
+            print("=========================================")
+            print("                MENU ALUNO               ")
+            print("=========================================")
+            print(f"[{self.nome}]")
+            print("0 - VOLTAR")
             print("1 - Criar novo Semestre")
             print("2 - Selecionar Semestre existente")
             print("3 - Criar e Selecionar Semestre")
             print("4 - Deletar semestre")
             print("5 - Listar Semestres")
             print("6 - Relatorio do Aluno")
+            print("=========================================")
             status = int(input("Escolha o numero da funcao que deseja executar: "))
             match status:
                 case 0:
@@ -77,10 +83,7 @@ class Aluno(Pessoa):
 
                 case 2:
                     if self.semestres:
-                        print("=== Semestres ===")
-                        for semestre in self.semestres:
-                            semestre.apresentar_semestre()
-                            print()
+                        self.listar_semestres()
                 
                         sem = input("Qual semestre deseja selecionar? ")
                         if self.verificar_semestre(sem):
@@ -100,10 +103,7 @@ class Aluno(Pessoa):
 
                 case 4:
                     if self.semestres:
-                        print("=== Semestres ===")
-                        for semestre in self.semestres:
-                            semestre.apresentar_semestre()
-                            print()
+                        self.listar_semestres()
                         sem = input("Qual semestre deseja deletar? ")
                         if self.verificar_semestre(sem):
                             self.deletar_semestre(sem)
@@ -114,10 +114,7 @@ class Aluno(Pessoa):
 
                 case 5:
                     if self.semestres:
-                        print("=== Semestres ===")
-                        for semestre in self.semestres:
-                            semestre.apresentar_semestre()
-                            print() 
+                        self.listar_semestres() 
                     else:
                         print("Nao ha semestres criados")
 
@@ -126,6 +123,15 @@ class Aluno(Pessoa):
 
                 case _:
                     print("Funcao invalida")
+
+    def listar_semestres(self):
+        print("=========================================")
+        print("            LISTA DE SEMESTRES           ")
+        print("=========================================")
+        for semestre in self.semestres:
+            semestre.apresentar_semestre()
+            print()
+        print("=========================================")
 
     def apresentar(self):
         self.calcular_IRA()
@@ -159,14 +165,22 @@ class Aluno(Pessoa):
 
 
     def relatorio_aluno(self):
-        print(f"=== Relatorio de {self.nome} ===")
+        print("=========================================")
+        print("           RELATORIO DO ALUNO            ")
+        print("=========================================")
+        print()
+        print(f"Aluno: {self.nome}")
         print(f"Matricula: {self.matricula}")
         self.calcular_IRA()
         print(f"IRA: {self.IRA}")
         print()
-        for semestre in self.semestres:
-            semestre.relatorio_semestre()
-        print(f"=== Relatorio de {self.nome} ===")
+        if self.semestres:
+            for semestre in self.semestres:
+                print("-----------------------------------------")
+                print(f"Semestre Letivo: {semestre.semestre}")
+                print("-----------------------------------------")
+                semestre.relatorio_semestre()
+        print("=========================================")
 
     def criar_semestre(self, semestre, periodo):
         sem = Semestre(semestre, periodo)
